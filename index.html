@@ -62,64 +62,135 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        if(firstNum == "" || secondNum == "") throw new Error("No Input");
+        if(secondNum == 0 && operator == '/') throw new CalculationError("Divide by Zero");
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }catch(err){
+        console.log("There was an error!");
+        console.error(err.name +": " + err.message);
+        output.innerHTML = "Try another input";
+      }
+      
     });
 
-    function consoleLog(){
-      console.log("Console Log Demo");
-    }
-    
-    function consoleError(){
-      console.error("Console Error Demo");
-    }
+     window.onerror = function(message, source, lineno, colno, error) {
+      console.log("There was an error!");
+      //console.error(error.name +": " + error.message);
 
-    function consoleDir(object){
-      console.dir(object);
-    }
-    
+      // return true;
+    } 
+
+    const groupLabel = "Log Group";
+    const timerLabel = "Timer";
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
     errorBtns.forEach((button) =>{
       button.addEventListener('click', ()=>{
         switch(button.innerHTML){
           case "Console Log Demo":
-            consoleLog();
+            console.log("Console Log Demo");
             break;
           case "Console Error Demo":
-            consoleError();
+            console.error("Console Error Demo");
             break;
           case "Console Dir":
-            consoleDir(button);
+            console.dir(button);
             break;
           case "Console dirxml":
-            console.log("Hello4");
+            console.dirxml(document.body);
             break;
           case "Console Group Start":
-            console.log("Hello5");
+            console.group(groupLabel);
             break;
           case "Console Group End":
-            console.log("Hello6");
+            console.groupEnd(groupLabel);
             break;
           case "Console Table":
-            console.log("Hello7");
+            console.table([
+              {
+                meal: "breakfast",
+                food: "eggs"
+              },
+              {
+                meal: "Lunch",
+                food: "Ramen",
+                drink: "Water"
+              },
+              {
+                meal: "Dinner",
+                food: "Steak",
+                drink: "Wine"
+              },
+            ])
             break;
           case "Start Timer":
-            console.log("Hello8");
+            console.log("Timer started!")
+            console.time(timerLabel);
             break;
           case "End Timer":
-            console.log("Hello9");
+            console.log("Timer ended!");
+            console.timeEnd(timerLabel);
             break;
           case "Console Trace":
-            console.log("Hello10");
+            console.log(superDuperRecursion(5));
             break;
           case "Trigger a Global Error":
-            console.log("Hello11");
+           try{
+              hiError("Hello");
+            }catch(err){
+              console.log("There was an error");
+              console.error(err.name + ": " + err.message);
+            }
             break;
         };
       });
     });
 
     
+    /**
+     * superDuperRecursion
+     * Channeling my computer science skills to make a crazy super duper awesome recursive function
+     * 
+     * @param {number} - An integer
+     * 
+     * @returns
+     *  the parameter
+     */
+    function superDuperRecursion(num){
+      if(num == 0){
+        console.trace();
+        return 0;
+      }
+      else{
+        return superDuperRecursion(num - 1) + 1;
+      }
+    }
+
+    //Our Custom Error
+    class CalculationError extends Error {
+      constructor(message){
+        super(message);
+        this.name = "Calculation Error";
+      }
+    } 
+
+    
     // TODO - Make buttons functional
   </script>
+
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({
+    token: "7f43b1e529ce4639bc1f9e282a4e6926",
+    version: "YOUR_APP_VERSION" // eg 1.3.6
+    // for more configuration options, see https://docs.trackjs.com
+  });
+
+  // or add it to the agent later
+  TrackJS.configure({ version: "YOUR_APP_VERSION" });
+</script>
+
+
+                        
 </body>
 </html>
