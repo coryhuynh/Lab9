@@ -65,7 +65,60 @@
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
+    function consoleLog(){
+      console.log("Console Log Demo");
+    }
+    
+    function consoleError(){
+      console.error("Console Error Demo");
+    }
+
+    function consoleDir(object){
+      console.dir(object);
+    }
+    
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+    errorBtns.forEach((button) =>{
+      button.addEventListener('click', ()=>{
+        switch(button.innerHTML){
+          case "Console Log Demo":
+            consoleLog();
+            break;
+          case "Console Error Demo":
+            consoleError();
+            break;
+          case "Console Dir":
+            consoleDir(button);
+            break;
+          case "Console dirxml":
+            console.log("Hello4");
+            break;
+          case "Console Group Start":
+            console.log("Hello5");
+            break;
+          case "Console Group End":
+            console.log("Hello6");
+            break;
+          case "Console Table":
+            console.log("Hello7");
+            break;
+          case "Start Timer":
+            console.log("Hello8");
+            break;
+          case "End Timer":
+            console.log("Hello9");
+            break;
+          case "Console Trace":
+            console.log("Hello10");
+            break;
+          case "Trigger a Global Error":
+            console.log("Hello11");
+            break;
+        };
+      });
+    });
+
+    
     // TODO - Make buttons functional
   </script>
 </body>
