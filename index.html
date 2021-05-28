@@ -75,10 +75,7 @@
     });
 
      window.onerror = function(message, source, lineno, colno, error) {
-      console.log("There was an error!");
-      console.error(error.name +": " + error.message);
-
-      // return true;
+      console.log("There was an uncaught global error!");
     } 
 
     const groupLabel = "Log Group";
@@ -135,12 +132,8 @@
             console.log(superDuperRecursion(5));
             break;
           case "Trigger a Global Error":
-           try{
               hiError("Hello");
-            }catch(err){
-              console.log("There was an error");
-              console.error(err.name + ": " + err.message);
-            }
+
             break;
         };
       });
